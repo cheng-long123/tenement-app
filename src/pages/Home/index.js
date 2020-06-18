@@ -5,7 +5,7 @@ import {Route} from 'react-router-dom'
 // 引入 TabBar 
 import { TabBar } from 'antd-mobile';
 // 引入home 样式
-import './home.css'
+import './home.scss'
 // 导入组件
 import Index from '../Index'
 import Houselist from '../Houselist'

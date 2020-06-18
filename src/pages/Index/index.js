@@ -2,9 +2,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 // 轮播图
-import { Carousel, Toast, Flex } from 'antd-mobile';
+import { Carousel, Toast, Flex, Grid  } from 'antd-mobile';
 // 引进index样式
 import './index.css'
+import './index.scss'
 // 引进nav图片
 import nav1 from '../../assets/images/nav-1.png'
 import nav2 from '../../assets/images/nav-2.png'
@@ -34,12 +35,22 @@ const navs = [{
 }]
 export default class Index extends Component {
     state = {
-        data: [],
+        data: [], // 轮播图
         imgHeight: 176,
-        isplay: false
+        isplay: false, // 轮播图自动播放
+        groups:[], // 租房小组
+        news: [], //最新资讯
+        myCity: '' // 我的位置
       }
       componentDidMount() {
+        // 轮播
           this.getSwiper()
+        // 出租
+        this.getGroups()
+        // 最新资讯
+        this.getNews(0)
+        // 获取位置信息
+        this.getLocation()
       }
       // 获取轮播图数据
       async getSwiper () {
@@ -60,6 +71,40 @@ export default class Index extends Component {
                 isplay: true
               })
           })
+      }
+      // 租房小组
+      async getGroups () {
+        const { data } = await axios({
+          method: 'GET',
+          url: 'http://api-haoke-dev.itheima.net/home/groups?area=AREA%7C88cff55c-aaa4-e2e0'
+        })
+        // console.log(data);
+        this.setState({
+          groups: data.body
+        })
+        
+      }
+      // 最新资讯
+      async getNews () {
+        const { data } = await axios({
+          method: 'GET',
+          url: 'http://api-haoke-dev.itheima.net/home/news?area=AREA%7C88cff55c-aaa4-e2e0'
+        })
+        // console.log(data)
+        this.setState({
+          news: data.body
+        })
+      }
+      // 获取位置信息
+      getLocation () {
+        var myCity = new window.BMap.LocalCity()
+        myCity.get( result => {
+          var cityName = result.name
+          // console.log(cityName)
+          this.setState({
+            myCity: cityName
+          })
+        })
       }
       // 渲染Swiper
       renderSwiper () {
@@ -95,9 +140,51 @@ export default class Index extends Component {
         </Flex.Item>
       })
       }
+      // 最新资讯 news渲染区
+      renderNews () {
+        return this.state.news.map( item => {
+          return (
+            <Flex className="news-content" key={item.id}>
+            <div className="left-image">
+            <img src={`http://api-haoke-dev.itheima.net${item.imgSrc}`}alt=""/>
+            </div>
+            <div className="rigth-text">
+              <h4>{item.title}</h4>
+              <div className="bottom-text">
+              <span>{item.from}</span>
+              <span>{item.date}</span>
+              </div>
+            </div>
+          </Flex>
+          )
+        })
+      }
     render() {
         return (
         <div className="index">
+         {/* 搜索区 */}
+         <Flex className="search">
+            <div className="left-search">
+                <div className="region" onClick={ () => {
+                  this.props.history.push('/cityList')
+                }}>
+                <span>{this.state.myCity}</span>
+                 <i className="iconfont icon-arrow"/>
+                </div>
+                <div className="search-content">
+                <i className="iconfont icon-seach"></i>
+                <input type="text" placeholder="请输入小区地址" />
+                </div>
+            </div>
+            <i 
+              className="iconfont icon-map" 
+              onClick={()=>{
+                // 点击  右侧地图图标  去/map   地图找房页面
+                this.props.history.push("/map")
+              }}
+          />
+
+         </Flex>
         {/* 轮播图 */}
             <Carousel
               autoplay={this.state.isplay}
@@ -109,11 +196,46 @@ export default class Index extends Component {
               { this.renderSwiper()}
             </Carousel>
             {/* nav区 */}
-            <Flex className="navs">
+           <Flex className="navs">
               {
                 this.renderNavs()
               }
             </Flex>
+             {/* 租房小组 */}
+             <div className="groups" onClick={() => {
+               this.props.history.push('/map')
+             }}>
+              {/* 头部区域 */}
+                <div className="groups-title">
+                    <h3>租房小组</h3>
+                    <span>更多</span>
+                </div>
+             { /* 内容区 */}
+             <Grid data={this.state.groups}
+              hasLine={false}
+              square={false}
+              columnNum={2}
+              activeStyle={true}
+              renderItem={(item, index) => (
+               <Flex className="content" justify="between">
+                  <div className="content-text">
+                  <h3>{item.title}</h3>
+                  <span>{item.desc}</span>
+                  </div>
+                  <img className="img" src={`http://api-haoke-dev.itheima.net${item.imgSrc}`} alt=""/>
+               </Flex>
+              )}
+              />
+             </div>
+             {/* 新闻资讯 */}
+            <div className="news">
+              <div className="news-title">
+              <h3>最新资讯</h3>
+              </div>
+                {
+                 this.renderNews()
+                }
+            </div>
         </div>
         )
     }

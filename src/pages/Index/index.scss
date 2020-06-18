@@ -1,0 +1,178 @@
+.index{
+  position: relative;
+}
+// nav 导航区
+.navs{
+    text-align: center;
+    padding: 15px 0;
+    background-color: #fff;
+    img {
+        width: 48px;
+        height: 48px;
+    }
+    p {
+        padding-top: 10px;
+   }
+}
+
+// 租房小组
+.groups{
+    padding: 10px;
+    .groups-title{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 15px;;
+        h3{
+            font-size: 15px;
+            padding-left: 10px;;;
+        }
+    }
+    .am-grid {
+        .am-flexbox {
+          margin-bottom: 10px;
+          background-color: transparent;
+          .am-flexbox-item {
+              padding: 0;
+            .am-grid-item-content {
+              height: 85px;
+              padding: 12px 0;
+              .am-flexbox-align-center{
+                padding: 0 12px;
+              }
+            }
+          }
+    
+          .am-grid-item {
+            margin-right: 0;
+            background-color: #fff;
+    
+            &:first-child {
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+
+      .am-grid-item {
+        padding: 0 13px;
+    
+        .content-text {
+          h3 {
+            margin-bottom: 5px;
+            font-size: 13px;
+          }
+    
+          p {
+            color: #999;
+            font-size: 12px;
+          }
+        }
+    
+        .img {
+          width: 55px;
+        }
+      }
+}
+
+// 最新资讯
+.news{
+  padding: 10px 15px;
+  background-color: #fff;
+  .news-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+  .news-content{
+    height: 120px;
+    padding: 15px 0;
+    .left-image{
+      width: 120px;
+      height: 90px;
+      margin-right: 10px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .rigth-text{
+      position: relative;
+      height: 100%;
+      span{
+        position: absolute;
+        bottom: 0;
+        color: #9c9fa1;
+        &:last-child{
+          right: 0;
+        }
+      }
+    }
+  }
+}
+// 搜索
+.search{
+  position: absolute;
+  top: 25px;
+  width: 100%;
+  height: 34px;
+  z-index: 10;
+  display: flex;
+  padding: 0 10px;
+  .left-search{
+    background-color: #fff;
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+    margin-right: 10px;
+    .region{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span{
+        flex: 1;
+        font-size: 14px;
+        color: #333;
+      }
+      .icon-arrow{
+        font-size: 12px;
+        color:#7f7f80;
+        margin-left: 2px;
+      }
+    }
+    .search-content{
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .icon-seach{
+        position: absolute;
+        left: 20px;
+        font-size: 15px;
+        color: #9c9fa1;
+      }
+      input{
+        // width: 250px;
+        width: 100%;
+        height: 100%;
+        border: 0 none;
+        padding: 5px 0;
+        padding-left: 40px;
+        line-height: 34px;
+        &::placeholder{
+          padding-left: 10px;
+          line-height: 34px;
+          color: #9c9fa1
+        }
+      }
+    }
+  }
+  .icon-map{
+    display: inline-block;
+    color: #fff;
+    font-size: 25px;
+    margin-right: 5px;
+  }
+}
