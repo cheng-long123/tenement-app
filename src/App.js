@@ -10,11 +10,12 @@ function App() {
   return (
     <Router>
     <Route
+      exact
       path="/"
       render={props => {
-          return <Redirect to="/home/index"></Redirect>
+          return <Redirect to="/home/index" />
       }}
-      ></Route>
+      />
     <Route path='/home' component={Home}></Route>
     <Route path='/cityList' component={CityList}></Route>
     <Route path="/map" component={Map}/>

@@ -11,6 +11,8 @@ import nav1 from '../../assets/images/nav-1.png'
 import nav2 from '../../assets/images/nav-2.png'
 import nav3 from '../../assets/images/nav-3.png'
 import nav4 from '../../assets/images/nav-4.png'
+// 导入获取位置
+import { getLocation } from '../../utils/index'
 // nav 数据
 const navs = [{
   id: 0,
@@ -26,7 +28,7 @@ const navs = [{
   id: 2,
   img: nav3,
   title: '地图找房',
-  path: '/home/map'
+  path: '/map'
 }, {
   id: 3,
   img: nav4,
@@ -40,7 +42,8 @@ export default class Index extends Component {
         isplay: false, // 轮播图自动播放
         groups:[], // 租房小组
         news: [], //最新资讯
-        myCity: '' // 我的位置
+        myCity:'',  // 我的位置
+        myCityId: '' //地区id
       }
       componentDidMount() {
         // 轮播
@@ -76,7 +79,10 @@ export default class Index extends Component {
       async getGroups () {
         const { data } = await axios({
           method: 'GET',
-          url: 'http://api-haoke-dev.itheima.net/home/groups?area=AREA%7C88cff55c-aaa4-e2e0'
+          url: 'http://api-haoke-dev.itheima.net/home/groups',
+          params: {
+            area: this.state.myCityId
+          }
         })
         // console.log(data);
         this.setState({
@@ -88,7 +94,10 @@ export default class Index extends Component {
       async getNews () {
         const { data } = await axios({
           method: 'GET',
-          url: 'http://api-haoke-dev.itheima.net/home/news?area=AREA%7C88cff55c-aaa4-e2e0'
+          url: 'http://api-haoke-dev.itheima.net/home/news',
+          params: {
+            area: this.state.myCityId
+          }
         })
         // console.log(data)
         this.setState({
@@ -96,15 +105,14 @@ export default class Index extends Component {
         })
       }
       // 获取位置信息
-      getLocation () {
-        var myCity = new window.BMap.LocalCity()
-        myCity.get( result => {
-          var cityName = result.name
-          // console.log(cityName)
-          this.setState({
-            myCity: cityName
-          })
-        })
+      async getLocation () {
+       let location = await getLocation()
+      //  console.log(location);
+       this.setState({
+        myCity: location.label,
+        myCityId: location.value
+       })
+      // console.log(location);
       }
       // 渲染Swiper
       renderSwiper () {
