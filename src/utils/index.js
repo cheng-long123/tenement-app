@@ -1,4 +1,4 @@
-import axios from 'axios'
+import request from './request.js'
 export const getLocation = () => {
     let myCity = new window.BMap.LocalCity()
     let city = JSON.parse(localStorage.getItem('my-city'))
@@ -6,9 +6,9 @@ export const getLocation = () => {
         return new Promise( (resolve, reject) => {
             myCity.get( async result => {
                 let cityName = result.name
-                let { data } = await axios({
+                let { data } = await request({
                     method: 'GET',
-                    url: 'http://api-haoke-dev.itheima.net/area/info',
+                    url: '/area/info',
                     params: {
                         name: cityName
                     }

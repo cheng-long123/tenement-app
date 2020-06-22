@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {AutoSizer, List} from 'react-virtualized'
-import axios from 'axios'
+import request from '../../utils/request.js'
 import { Toast } from 'antd-mobile';
 import './index.scss'
 import NvaHeader from '../../components/NavHeader'
@@ -23,15 +23,15 @@ export default class CityList extends Component {
     // 获取城市数据
     async getCity () {
         // 发送请求
-        const { data } = await axios({
+        const { data } = await request({
             method: 'GET',
-            url : 'http://api-haoke-dev.itheima.net/area/city?level=1'
+            url : '/area/city?level=1'
         })
         const {cityList, cityIndex} = this.formaCity(data.body)
         // console.log(cityIndex);
-        const hot = await axios({
+        const hot = await request({
             method: 'GET',
-            url: 'http://api-haoke-dev.itheima.net/area/hot'
+            url: '/area/hot'
         })
         cityList['hot'] = hot.data.body
         cityIndex.unshift('hot')
@@ -163,7 +163,7 @@ export default class CityList extends Component {
     render() {
         return (
             <div className="cityList">
-             <NvaHeader></NvaHeader>
+             <NvaHeader>城市选择</NvaHeader>
             <AutoSizer>
               { ({height, width}) => (
                   <List

@@ -1,6 +1,6 @@
 // 引进react
 import React, { Component } from 'react'
-import axios from 'axios'
+import request from '../../utils/request.js'
 // 轮播图
 import { Carousel, Toast, Flex, Grid  } from 'antd-mobile';
 // 引进index样式
@@ -14,6 +14,7 @@ import nav4 from '../../assets/images/nav-4.png'
 // 导入获取位置
 import { getLocation } from '../../utils/index'
 // nav 数据
+const url = 'http://api-haoke-web.itheima.net'
 const navs = [{
   id: 0,
   img: nav1,
@@ -57,9 +58,9 @@ export default class Index extends Component {
       }
       // 获取轮播图数据
       async getSwiper () {
-         const{ data } = await axios({
+         const{ data } = await request({
             method: 'GET',
-            url: 'http://api-haoke-dev.itheima.net/home/swiper'
+            url: '/home/swiper'
           })
         //   console.log(data);
           // 获取失败提示
@@ -77,9 +78,9 @@ export default class Index extends Component {
       }
       // 租房小组
       async getGroups () {
-        const { data } = await axios({
+        const { data } = await request({
           method: 'GET',
-          url: 'http://api-haoke-dev.itheima.net/home/groups',
+          url: '/home/groups',
           params: {
             area: this.state.myCityId
           }
@@ -92,9 +93,9 @@ export default class Index extends Component {
       }
       // 最新资讯
       async getNews () {
-        const { data } = await axios({
+        const { data } = await request({
           method: 'GET',
-          url: 'http://api-haoke-dev.itheima.net/home/news',
+          url: '/home/news',
           params: {
             area: this.state.myCityId
           }
@@ -123,7 +124,7 @@ export default class Index extends Component {
               style={{ display: 'inline-block', width: '100%', height: this.state.imgHeight }}
               >
               <img
-                src={`http://api-haoke-dev.itheima.net${val.imgSrc}`}
+                src={url + val.imgSrc}
                 alt=""
                 style={{ width: '100%', verticalAlign: 'top' }}
                 onLoad={() => {
@@ -154,7 +155,7 @@ export default class Index extends Component {
           return (
             <Flex className="news-content" key={item.id}>
             <div className="left-image">
-            <img src={`http://api-haoke-dev.itheima.net${item.imgSrc}`}alt=""/>
+            <img src={url + item.imgSrc}alt=""/>
             </div>
             <div className="rigth-text">
               <h4>{item.title}</h4>
@@ -210,9 +211,7 @@ export default class Index extends Component {
               }
             </Flex>
              {/* 租房小组 */}
-             <div className="groups" onClick={() => {
-               this.props.history.push('/map')
-             }}>
+             <div className="groups" >
               {/* 头部区域 */}
                 <div className="groups-title">
                     <h3>租房小组</h3>
@@ -230,7 +229,7 @@ export default class Index extends Component {
                   <h3>{item.title}</h3>
                   <span>{item.desc}</span>
                   </div>
-                  <img className="img" src={`http://api-haoke-dev.itheima.net${item.imgSrc}`} alt=""/>
+                  <img className="img" src={url + item.imgSrc} alt=""/>
                </Flex>
               )}
               />
