@@ -11,10 +11,11 @@ import nav1 from '../../assets/images/nav-1.png'
 import nav2 from '../../assets/images/nav-2.png'
 import nav3 from '../../assets/images/nav-3.png'
 import nav4 from '../../assets/images/nav-4.png'
+import SearchHeader from '../../components/SearchHeader'
 // 导入获取位置
 import { getLocation } from '../../utils/index'
 // nav 数据
-const url = 'http://api-haoke-web.itheima.net'
+const url = 'http://api-haoke-dev.itheima.net'
 const navs = [{
   id: 0,
   img: nav1,
@@ -172,28 +173,7 @@ export default class Index extends Component {
         return (
         <div className="index">
          {/* 搜索区 */}
-         <Flex className="search">
-            <div className="left-search">
-                <div className="region" onClick={ () => {
-                  this.props.history.push('/cityList')
-                }}>
-                <span>{this.state.myCity}</span>
-                 <i className="iconfont icon-arrow"/>
-                </div>
-                <div className="search-content">
-                <i className="iconfont icon-seach"></i>
-                <input type="text" placeholder="请输入小区地址" />
-                </div>
-            </div>
-            <i 
-              className="iconfont icon-map" 
-              onClick={()=>{
-                // 点击  右侧地图图标  去/map   地图找房页面
-                this.props.history.push("/map")
-              }}
-          />
-
-         </Flex>
+        <SearchHeader myCity={this.state.myCity}></SearchHeader>
         {/* 轮播图 */}
             <Carousel
               autoplay={this.state.isplay}

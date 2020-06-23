@@ -159,7 +159,7 @@ export default class Map extends Component {
             return (
                 <div className={styles.house} key={index}>
                 <div className={styles.imgWrap}>
-                    <img className={styles.img} src={`http://api-haoke-web.itheima.net${item.houseImg}`} alt="" />
+                    <img className={styles.img} src={`http://api-haoke-dev.itheima.net${item.houseImg}`} alt="" />
                 </div>
                 <div className={styles.content}>
                     <h3 className={styles.title}>{item.title}</h3>
